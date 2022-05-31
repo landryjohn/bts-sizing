@@ -4,21 +4,21 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %} Simba {% endblock %}</title>
-    <link rel="shortcut icon" type="image/jpg" href="{% static 'simba_app/img/logo-simba.png'%}"/>
-    <link rel="stylesheet" href="{% static 'simba_app/style.css' %}">
+    <title>{% block title %} BTS-SIZING {% endblock %}</title>
+    <link rel="shortcut icon" type="image/jpg" href=""/>
+    <link rel="stylesheet" href="{% static 'btssizing_app/style.css' %}">
     <!-- Boxiocns CDN Link -->
-    <link href="{% static 'simba_app/style/boxicons.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'btssizing_app/style/boxicons.min.css' %}" rel='stylesheet'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="{% static 'btssizing_app/style/bootstrap/bootstrap.min.css' %}" rel="stylesheet">
 </head>
 
 <body>
     <div class="sidebar close">
         {% block sidebar %}
         <div class="logo-details">
-            <img class="logo-img" src="{% static 'simba_app/img/logo-simba.png'%}" width="80px" height="80px" alt="">
-            <span class="logo_name">Simba</span>
+            <img class="logo-img" src="" width="80px" height="80px" alt="">
+            <span class="logo_name">BTS-SIZING</span>
         </div>
         <ul class="nav-links">
             <li>
@@ -30,11 +30,11 @@
                     <li><a class="link_name" href="#">Tableau De Bord</a></li>
                 </ul>
             </li>
-            <li>
+            <!-- <li>
                 <div class="iocn-link">
                     <a href="#">
                         <i class='bx bxs-network-chart'></i>
-                        <span class="link_name">Réseau</span>
+                        <span class="link_name">Planification couverture</span>
                     </a>
                     <i class='bx bxs-chevron-down arrow'></i>
                 </div>
@@ -44,40 +44,35 @@
                     <li><a href="#">Equipements</a></li>
                     <li><a href="#">Alertes</a></li>
                 </ul>
-            </li>
+            </li> -->
             <li>
-                <div class="iocn-link">
-                    <a href="#">
-                        <i class='bx bxs-traffic-barrier'></i>
-                        <span class="link_name">IDS</span>
-                    </a>
-                    <i class='bx bxs-chevron-down arrow'></i>
-                </div>
-                <ul class="sub-menu">
-                    <li><a class="link_name" href="#">IDS</a></li>
-                    <li><a href="#">Intrusions</a></li>
-                    <li><a href="#">Alertes</a></li>
-                    <li><a href="#">Configuration</a></li>
+                <a href="#">
+                    <i class='bx bxs-virus-block'></i>
+                    <span class="link_name">Planification Couverture</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="#">Planification Couverture</a></li>
                 </ul>
             </li>
             <li>
                 <a href="#">
                     <i class='bx bxs-virus-block'></i>
-                    <span class="link_name">Vulnérabilités</span>
+                    <span class="link_name">Planification Capacité</span>
                 </a>
                 <ul class="sub-menu blank">
-                    <li><a class="link_name" href="#">Vulnérabilités</a></li>
+                    <li><a class="link_name" href="#">Planification Capacité</a></li>
                 </ul>
             </li>
             <li>
                 <a href="#">
-                    <i class='bx bxs-user-detail'></i>
-                    <span class="link_name">Utilisateurs</span>
+                    <i class='bx bxs-virus-block'></i>
+                    <span class="link_name">Contrôle de Puissance</span>
                 </a>
                 <ul class="sub-menu blank">
-                    <li><a class="link_name" href="{% url 'simba_app:users' %}">Utilisateurs</a></li>
+                    <li><a class="link_name" href="#">Contrôle de Puissance</a></li>
                 </ul>
             </li>
+            <li>
             <li>
                 <a href="#">
                     <i class='bx bxs-bell'></i>
@@ -107,13 +102,13 @@
             <li>
                 <div class="profile-details">
                     <div class="profile-content">
-                        <img src="{% static 'simba_app/img/logo-simba.png' %}" alt="profileImg">
+                        <img src="" alt="profileImg">
                     </div>
                     <div class="name-job">
                         <div class="profile_name">{{ user.first_name }}</div>
                         <div class="job">Adminitrateur</div>
                     </div>
-                    <a href="{% url 'simba_app:logout' %}">
+                    <a href="{% url 'btssizing_app:logout' %}">
                         <i class='bx bx-log-out'></i>
                     </a>
                     
@@ -126,8 +121,8 @@
         {% block content %}
         {% endblock %}
     </section>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    
+    <script src="{% static 'btssizing_app/js/bootstrap/bootstrap.min.js' %}"></script>
 
     <script>
         let arrow = document.querySelectorAll(".arrow");
