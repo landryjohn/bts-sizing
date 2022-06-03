@@ -46,12 +46,21 @@
                 </ul>
             </li> -->
             <li>
-                <a href="#">
-                    <i class='bx bxs-virus-block'></i>
+                <a href="{% url 'btssizing_app:projects' %}">
+                    <i class='bx bxs-network-chart'></i>
+                    <span class="link_name">Projets</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="{% url 'btssizing_app:projects' %}">Projets</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="{% url 'btssizing_app:plan_couverture' %}">
+                    <i class='bx bxs-network-chart'></i>
                     <span class="link_name">Planification Couverture</span>
                 </a>
                 <ul class="sub-menu blank">
-                    <li><a class="link_name" href="#">Planification Couverture</a></li>
+                    <li><a class="link_name" href="{% url 'btssizing_app:plan_couverture' %}">Planification Couverture</a></li>
                 </ul>
             </li>
             <li>
@@ -83,12 +92,13 @@
                 </ul>
             </li>
             <li>
-                <div class="iocn-link">
-                    <a href="#">
-                        <i class='bx bx-history'></i>
-                        <span class="link_name">Logs</span>
-                    </a>
-                </div>
+                <a href="#">
+                    <i class='bx bx-history'></i>
+                    <span class="link_name">Logs</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="#">Logs</a></li>
+                </ul>
             </li>
             <li>
                 <a href="#">

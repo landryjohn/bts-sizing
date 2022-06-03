@@ -1,0 +1,132 @@
+{% extends "btssizing_app/app.html" %}
+
+{% block content %}
+<div class="home-content">
+    <i class='bx bx-menu'></i>
+    <span class="text">LISTE DES PROJETS</span>
+    <hr>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addProjectModal">Créer un projet</button>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <table class="table table-dark table-striped">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Zone Géographique</th>
+                    <th>Surface(km²)</th>
+                    <th>Date</th>
+                    <th>Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for project in projects %}
+                <tr>
+                    <td>{{project.titre}}</td>
+                    <td>{{project.zone_geographique}}</td>
+                    <td>{{project.surface_zone}} km²</td>
+                    <td>{{project.created_at}}</td>
+                    <td>
+                        <button class="btn btn-success" data-id="{{project.id}}" data-bs-toggle="modal" data-bs-target="#projectModal">afficher</button>
+                        <!-- <button class="btn btn-warning">modifier</button> -->
+                        <button class="btn btn-danger deleteProject" data-id="{{project.id}}">supprimer</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="projectModal" tabindex="-1" aria-labelledby="projectModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="projectModalLabel">Projet</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p><b>Surface de la zone</b> : <span id="project_surface_zone"></span></p>
+                <p><b>Zone Géographique</b> : <span id="project_zone"></span></p>
+                <!-- <p><b>Nombre de sites</b> : <span id="project_site_nb"></span> N/A</p> -->
+                <p><b>Description</b> : <span id="project_description"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="addProjectModal" tabindex="-1" aria-labelledby="addProjectModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addProjectModalLabel">Création d'un projet</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="add/" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="title">Titre</label>
+                        <input type="text" id="title" name="title" class="form-control" required="required">
+                    </div>
+                    <div class="form-group">
+                        <label for="zone">Zone Géographique</label>
+                        <input type="text" id="zone" name="zone" class="form-control" required="required">
+                    </div>
+                    <div class="form-group">
+                        <label for="surface_zone">Surface de la zone (km²)</label>
+                        <input type="number" id="surface_zone" name="surface_zone" class="form-control" required="required">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description du projet</label>
+                        <textarea name="description" class="form-control" id="description" cols="30" rows="10"></textarea>
+                    </div>
+                    <div class="form-grou">
+                        <input type="submit" class="btn btn-success" value="Créer">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    let projects = []
+    projects = JSON.parse("{{json_projects | escapejs}}")
+    let projectModal = document.getElementById('projectModal')
+    projectModal.addEventListener('show.bs.modal', event => {
+        let button = event.relatedTarget
+        let projectId = button.getAttribute('data-id') 
+        project = projects.filter(project => project.id == projectId )[0]
+        document.getElementById('projectModalLabel').textContent = `${project.titre}`
+        document.getElementById('project_zone').textContent = `${project.zone_geographique}`
+        document.getElementById('project_surface_zone').textContent = `${project.s_zone}`
+        document.getElementById('project_description').textContent = `${project.description}`
+    })
+
+    let deleteProjectBtn = document.querySelectorAll('.deleteProject')
+    deleteProjectBtn.forEach(el => el.addEventListener('click', event => {
+            let button = event.target
+            let projectId = button.getAttribute('data-id')
+            let res = confirm(`Voulez vous vraiment supprimer le projet ${projectId}`)
+            if( res )
+                // TODO : delete project 
+                projectId = 0 
+        })
+    )
+</script>
+{% endblock %}

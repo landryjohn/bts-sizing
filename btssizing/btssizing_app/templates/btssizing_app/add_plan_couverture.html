@@ -1,0 +1,206 @@
+{% extends "btssizing_app/app.html" %}
+
+{% block content %}
+<div class="home-content">
+    <i class='bx bx-menu'></i>
+    <span class="text">Ajout d'un plan de couverture</span>
+    <hr>
+</div>
+
+<div class="container mt-3 mb-3">
+    <div class="text-center">
+        <h3 class="text-warning"><b>{{ step_name }}</b></h3>
+    </div>
+    {% if step == 1 %}
+    <!-- Formulaire de renseignement des informations pour la calcul du bilan de perte des liaisons -->
+    <div class="row">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="row mt-2">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <input type="hidden" name="id" value="{{id}}">
+                        <input type="hidden" name="step" value="1">
+                        <label for="project">Choisir le projet</label>
+                        <select name="project_id" id="project" class="form-control col-3">
+                            <option selected disabled>Choisir un project</option>
+                            {% for project in projects %}
+                            <option value="{{project.id}}">{{project.titre}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="pout_ms">Puissance d’émission maximum montant (Pout_MS)</label>
+                        <input type="number" class="form-control" name="pout_ms" id="pout_ms" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="pout_bs">Puissance d’émission maximum descendant (Pout_BS)</label>
+                        <input type="number" class="form-control" name="pout_bs" id="pout_bs" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="ga_bs">Gain d’antenne du BTS (Ga_BS)</label>
+                        <input type="number" class="form-control" name="ga_bs" id="ga_bs" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="ga_ms">Gain d’antenne du MS (Ga_MS)</label>
+                        <input type="number" class="form-control" name="ga_ms" id="ga_ms" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="lf_bs">Affaiblissement du feeder du BTS (Lf_BS)</label>
+                        <input type="number" class="form-control" name="lf_bs" id="lf_bs" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="lf_ms">Affaiblissement du feeder du MS (Lf_MS)</label>
+                        <input type="number" class="form-control" name="lf_ms" id="lf_ms" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="mf">Marge du fading d’ombre (Mf)</label>
+                        <input type="number" class="form-control" name="mf" id="mf" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="mi">Marge d’interférence (MI)</label>
+                        <input type="number" class="form-control" name="mi" id="mi" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="lp">Affaiblissement d’encombrement (Lp)</label>
+                        <input type="number" class="form-control" name="lp" id="lp" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="lb">Affaiblissement du corps humain (Lb)</label>
+                        <input type="number" class="form-control" name="lb" id="lb" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="s_bs">Sensibilité du récepteur du BTS (S_BS)</label>
+                        <input type="number" class="form-control" name="s_bs" id="s_bs" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="s_ms">Sensibilité du récepteur du MS (S_MS)</label>
+                        <input type="number" class="form-control" name="s_ms" id="s_ms" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="mpc">Marge de contrôle de puissance (Mpc)</label>
+                        <input type="number" class="form-control" name="mpc" id="mpc" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mt-4">
+                        <input type="submit" class="btn btn-success" value="valider (1/2)">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    {% endif %}
+    {% if step == 2 or True %}
+    <div class="row mt-2">
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="hidden" name="id" value="{{id}}">
+                <input type="hidden" name="step" value="2">
+            </div>
+            <div class="form-group mt-2">
+                <label for="modele_propagation">Modèle de propagation</label>
+                <select name="modele_propagation" id="modele_propagation" class="form-control" required>
+                    <option selected disabled>Choisir une modèle de propagation</option>
+                    <option value="MOH">Modèle Okumura-Hata</option>
+                    <option value="MCH">Modèle Cost231-Hata</option>
+                    <option value="PEL">Propagation en espace libre</option>
+                    <option value="MSGKF">Modèle software général (K-facteur</option>
+                </select>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="f">Saisir la fréquence (f)</label>
+                        <input type="number" class="form-control" id="f" name="f" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="hb">Hauteur du site (hb)</label>
+                        <input type="number" class="form-control" id="hb" name="hb">
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="hm">Hauteur valides de l’antenne de la BS (hm)</label>
+                        <input type="number" class="form-control" id="hm" name="hm">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="heff">Hauteur valides de l’antenne du MS (Heff)</label>
+                        <input type="number" class="form-control" id="heff" name="heff">
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="ahm"> (Ahm)</label>
+                        <input type="number" class="form-control" id="ahm" name="ahm">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="cm"> (Cm)</label>
+                        <input type="number" class="form-control" id="cm" name="cm">
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2 mb-3">
+                <div class="col-md-6 text-center">
+                    <input type="submit" class="btn btn-info" value="Valider (2/2)">
+                </div>
+            </div>
+        </form>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}
