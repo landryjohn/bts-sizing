@@ -12,7 +12,7 @@
   left: 0;
   height: 100%;
   width: 260px;
-  background-image: url(./img/sidebar-bg.gif);
+  background-color: #1d1b31;
   background-repeat: no-repeat;
   background-size: cover;
   z-index: 100;

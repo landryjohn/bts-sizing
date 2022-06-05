@@ -29,7 +29,7 @@
                 <tr>
                     <td>{{project.titre}}</td>
                     <td>{{project.zone_geographique}}</td>
-                    <td>{{project.surface_zone}} km²</td>
+                    <td>{{project.s_zone}} km²</td>
                     <td>{{project.created_at}}</td>
                     <td>
                         <button class="btn btn-success" data-id="{{project.id}}" data-bs-toggle="modal" data-bs-target="#projectModal">afficher</button>
@@ -51,7 +51,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p><b>Surface de la zone</b> : <span id="project_surface_zone"></span></p>
+                <p><b>Surface de la zone</b> : <span id="project_surface_zone"></span> km²</p>
                 <p><b>Zone Géographique</b> : <span id="project_zone"></span></p>
                 <!-- <p><b>Nombre de sites</b> : <span id="project_site_nb"></span> N/A</p> -->
                 <p><b>Description</b> : <span id="project_description"></span></p>

@@ -10,7 +10,7 @@ class Projet(models.Model):
     s_zone = models.FloatField(null=True)
     
 class Plan_couverture(models.Model):
-    projet = models.ForeignKey(Projet, on_delete=models.CASCADE)
+    projet = models.ForeignKey(Projet, on_delete=models.CASCADE, null=True)
     pl_ul = models.FloatField(null=True)
     pout_ms = models.FloatField(null=True)
     pout_bs = models.FloatField(null=True)
@@ -19,7 +19,7 @@ class Plan_couverture(models.Model):
     lf_bs = models.FloatField(null=True)
     lf_ms = models.FloatField(null=True)
     mf = models.FloatField(null=True)
-    ml = models.FloatField(null=True)
+    mi = models.FloatField(null=True)
     lp = models.FloatField(null=True)
     lb = models.FloatField(null=True)
     s_bs = models.FloatField(null=True)
@@ -33,7 +33,7 @@ class Plan_couverture(models.Model):
     nf_bs = models.FloatField(null=True)
     pl = models.FloatField(null=True)
     modele_propagation = models.CharField(null=True, max_length=255)
-    rayon = models.FloatField(null=True)
+    r = models.FloatField(null=True)
     hm = models.FloatField(null=True)
     hb = models.FloatField(null=True)
     heff = models.FloatField(null=True)

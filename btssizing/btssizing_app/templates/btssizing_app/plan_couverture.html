@@ -18,25 +18,26 @@
                    <th>Projet</th> 
                    <th>Nombre sites</th> 
                    <th>Sites UL</th> 
-                   <th>Sites DL</th> 
-                   <th>Distance sites (km)</th> 
+                   <th>Sites DL</th>  
                    <th>Date</th> 
                    <th>Actions</th> 
                 </tr>
             </thead>
             <tbody>
+                {% for plan in plans %}
                 <tr>
-                    <td>Projet 1</td> 
-                    <td>15</td> 
-                    <td>14</td> 
-                    <td>13</td> 
-                    <td>2</td> 
-                    <td>2022/05/2</td> 
+                    <td>{{plan.projet.titre}}</td> 
+                    <td>{{plan.nb_sites}}</td> 
+                    <td>{{plan.n_site_ul}}</td> 
+                    <td>{{plan.n_site_dl}}</td> 
+                    <td>{{plan.created_at}}</td> 
                     <td>
-                        <button class="btn btn-success">afficher</button>
-                        <button class="btn btn-danger">supprimer</button>
+                        <a href="{% url 'btssizing_app:show_plan_couverture' plan.id %}" class="btn btn-success">Afficher</a>
+                        <a href="{% url 'btssizing_app:edit_plan_couverture' plan.id %}" class="btn btn-warning">Modifier</a>
+                        <a href="{% url 'btssizing_app:edit_plan_couverture' plan.id %}" class="btn btn-danger">Supprimer</a>
                     </td> 
                 </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

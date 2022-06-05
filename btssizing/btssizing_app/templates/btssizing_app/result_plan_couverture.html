@@ -1,0 +1,25 @@
+{% extends "btssizing_app/app.html" %}
+
+{% block content %}
+<div class="home-content">
+        <i class='bx bx-menu'></i>
+        <span class="text">Résultat de la planification de couverture </span>
+        <hr>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <p>Affaiblissement maximum du lien montant : {{ p_c.pl_ul }} dBm</p>
+        <p>Affaiblissement maximum du lien descendant : {{ p_c.pl_dl }} dBm</p>
+        <p>Perte de liaison totale : {{ p_c.pl }} dBm</p>
+        <p>Modèle de propagation : {{ p_c.modele_propagation }}</p>
+        <p>Rayon : {{ p_c.r }} km</p>
+        <p>Nombre de sites en uplink : {{ p_c.n_site_ul }}</p>
+        <p>Nombre de sites en downlink : {{ p_c.n_site_dl }}</p>
+        <p>Nombre de sites en couverture : <b>{{ p_c.nb_sites }}</b></p>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}
