@@ -129,7 +129,7 @@ def add_plan_couverture(request):
                 'projects':projects, 
                 # 'id':1,
                 'id':plan_couverture.id,
-                'p_c': p_c
+                'p_c': plan_couverture
             }
         )
 

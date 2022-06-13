@@ -41,13 +41,26 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="pout_ms">Puissance d’émission maximum montant (Pout_MS)</label>
-                        <input type="number" class="form-control" name="pout_ms" id="pout_ms" value="{{ p_c.pout_ms|unlocalize|default_if_none:'' }}" required>
+                        <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="•	Généralement 200mW, 23dBm
+•	Dans différentes situations, les MS alloue la puissance à chaque canal selon certain principe d’allocation
+Type de canal montant	R_FCH	1x	    2x	    4x	    8x	    16x
+Puissance maximum	    21.55	19.17	20.55	21.29	21.91	22.35
+Avec R_FCH: radio frequency channel technology
+
+                        ">?</button>
+                        <input type="number" class="form-control" name="pout_ms" id="pout_ms" value="{{ p_c.pout_ms|default_if_none:23.0|unlocalize }}" required>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="pout_bs">Puissance d’émission maximum descendant (Pout_BS)</label>
-                        <input type="number" class="form-control" name="pout_bs" id="pout_bs" value="{{ p_c.pout_bs|unlocalize|default_if_none:'' }}" required>
+                        <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="•	Généralement 200mW, 23dBm
+•	Dans différentes situations, les MS alloue la puissance à chaque canal selon certain principe d’allocation
+Type de canal montant	R_FCH	1x	2x	4x	8x	16x
+Puissance maximum	21.55	19.17	20.55	21.29	21.91	22.35
+Avec R_FCH: radio frequency channel technology
+                        ">?</button>
+                        <input type="number" class="form-control" name="pout_bs" id="pout_bs" value="{{ p_c.pout_bs|default_if_none:19.17|unlocalize }}" required>
                     </div>
                 </div>
             </div>
@@ -55,13 +68,17 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="ga_bs">Gain d’antenne du BTS (Ga_BS)</label>
-                        <input type="number" class="form-control" name="ga_bs" id="ga_bs" value="{{ p_c.ga_bs|unlocalize|default_if_none:'' }}" required>
+                        <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="•	Le gain d’une antenne directionnelle est supérieur à celui d’une antenne omnidirectionnelle
+•	Valeur typique : antenne Omni : 11dBi ou 13dBi ; antenne directionnelle : 15dBi à 18dBi
+                        ">?</button>
+                        <input type="number" class="form-control" name="ga_bs" id="ga_bs" value="{{ p_c.ga_bs|default_if_none:13|unlocalize }}" required>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="ga_ms">Gain d’antenne du MS (Ga_MS)</label>
-                        <input type="number" class="form-control" name="ga_ms" id="ga_ms" value="{{ p_c.ga_ms|unlocalize|default_if_none:'' }}" required>
+                        <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="•	Généralement, le gain d’antenne du MS et l’affaiblissement de connexion sont considérés comme 0dB">?</button>
+                        <input type="number" class="form-control" name="ga_ms" id="ga_ms" value="{{ p_c.ga_ms|default_if_none:0|unlocalize }}" required>
                     </div>
                 </div>
             </div>
@@ -69,13 +86,22 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="lf_bs">Affaiblissement du feeder du BTS (Lf_BS)</label>
-                        <input type="number" class="form-control" name="lf_bs" id="lf_bs" value="{{ p_c.lf_bs|unlocalize|default_if_none:'' }}" required>
+                        <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="•	L’affaiblissement est en relation avec la fréquence du signal
+•	Les feeders différents ont des indices d’affaiblissement différents
+                        Fréquences
+Type feeder	450MHZ	    800MHZ	        2000MHZ
+7/8 inches	2.7 dB/100m	4.03dB /100m	6.46 dB/100m
+5/4 inches	1.9 dB/100m	2.98 dB/100m	4.77 dB/100m
+1/2 inches	7.6 dB/100m	11.2 dB/100m	17.7 dB/100m
+                        ">?</button>
+                        <input type="number" class="form-control" name="lf_bs" id="lf_bs" value="{{ p_c.lf_bs|default_if_none:10|unlocalize }}" required>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="lf_ms">Affaiblissement du feeder du MS (Lf_MS)</label>
-                        <input type="number" class="form-control" name="lf_ms" id="lf_ms" value="{{ p_c.lf_ms|unlocalize|default_if_none:'' }}" required>
+                        <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="•	L’affaiblissement du connecteur est approximativement 0.2 dB">?</button>
+                        <input type="number" class="form-control" name="lf_ms" id="lf_ms" value="{{ p_c.lf_ms|default_if_none:0.2|unlocalize }}" required>
                     </div>
                 </div>
             </div>
@@ -83,13 +109,18 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="mf">Marge du fading d’ombre (Mf)</label>
-                        <input type="number" class="form-control" name="mf" id="mf" value="{{ p_c.mf|unlocalize|default_if_none:'' }}" required>
+                        <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="•	L’effet d’ombre affecte le chemin de propagation, la densité de champ médian du signal reçu qui est une certaine distance de l’antenne d’émission Tx n’est pas constante. Il est soumis à la distribution logarithmique normale comme l’emplacement et le temps varient. Le fading causé par tel effet est appelé l’ombre (shadow).
+•	D’après la déviation standard du fading d’ombre et les exigences de la probabilité de la couverture du bord de cellule (déterminé par l’opérateur), nous pouvons calculer la marge du fading d’ombre par :
+Mf (en dB) = NORMSINV (probabilité de la couverture du bord) * r
+                        ">?</button>
+                        <input type="number" class="form-control" name="mf" id="mf" value="{{ p_c.mf|default_if_none:5.50|unlocalize }}" required>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="mi">Marge d’interférence (MI)</label>
-                        <input type="number" class="form-control" name="mi" id="mi" value="{{ p_c.mi|unlocalize|default_if_none:'' }}" required>
+                        <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="•	Ce paramètre représente l’augmentation du bruit à la suite de l’augmentation de la charge de la cellule">?</button>
+                        <input type="number" class="form-control" name="mi" id="mi" value="{{ p_c.mi|default_if_none:3.01|unlocalize }}" required>
                     </div>
                 </div>
             </div>
@@ -97,13 +128,25 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="lp">Affaiblissement d’encombrement (Lp)</label>
-                        <input type="number" class="form-control" name="lp" id="lp" value="{{ p_c.lp|unlocalize|default_if_none:'' }}" required>
+                        <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="•	Les objets du terrain ont une grande influence sur la propagation du signal.
+•	Pertes dues à la traversée des murs, vitres ou parois ; à prendre en compte si l’on désire couvrir l’intérieur des bâtiments ou des voitures. 
+•	Voiture sans kit : ~ [6-10] dB 
+•	Intérieur (premier mur) : 
+-	Milieu urbain dense : ~ [20-25] dB 
+-	Milieu urbain : ~ [15-20] dB 
+-	Milieu rural : ~ [5-15] dB 
+-	Intérieur profond (second mur) : +3 dB deep indoor
+                        ">?</button>
+                        <input type="number" class="form-control" name="lp" id="lp" value="{{ p_c.lp|default_if_none:''|unlocalize }}" required>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="lb">Affaiblissement du corps humain (Lb)</label>
-                        <input type="number" class="form-control" name="lb" id="lb" value="{{ p_c.lb|unlocalize|default_if_none:'' }}" required>
+                        <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="•	Le cops humain peut absorber les signaux transmis par MS. Pendant le calcul du bilan de liaison, l’affaiblissement du corps humain est supposé 3dB.
+•	Généralement, le terminal n’est pas près du corps humain en cas de services de données, dans ce cas l’affaiblissement du corps humain peut être ignoré.
+                        ">?</button>
+                        <input type="number" class="form-control" name="lb" id="lb" value="{{ p_c.lb|default_if_none:3|unlocalize }}" required>
                     </div>
                 </div>
             </div>
@@ -111,13 +154,23 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="s_bs">Sensibilité du récepteur du BTS (S_BS)</label>
-                        <input type="number" class="form-control" name="s_bs" id="s_bs" value="{{ p_c.s_bs|unlocalize|default_if_none:'' }}" required>
+                        <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="•	Rb débit binaire d'informations exprimé en bits par seconde (bit/s) : consulter le tableau précédent pour prendre une valeur
+•	KT densité spectrale du bruit thermique, -174dBm/Hz pour une température ambiante
+•	W bande passante d’étalement de spectre
+•	NF_BS valeur du bruit du récepteur : dépend de la valeur des caractéristiques de l’équipement (la valeur du bruit de la BS de Huawei est 3.2 dB)
+                        ">?</button>
+                        <input type="number" class="form-control" name="s_bs" id="s_bs" value="{{ p_c.s_bs|default_if_none:''|unlocalize }}" required>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="s_ms">Sensibilité du récepteur du MS (S_MS)</label>
-                        <input type="number" class="form-control" name="s_ms" id="s_ms" value="{{ p_c.s_ms|unlocalize|default_if_none:'' }}" required>
+                        <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="•	Rb débit binaire d'informations exprimé en bits par seconde (bit/s) : consulter le tableau précédent pour prendre une valeur
+•	KT densité spectrale du bruit thermique, -174dBm/Hz pour une température ambiante
+•	W bande passante d’étalement de spectre
+•	NF_BS valeur du bruit du récepteur : généralement, la valeur du bruit du MS est de 6 à 8 dB
+                        ">?</button>
+                        <input type="number" class="form-control" name="s_ms" id="s_ms" value="{{ p_c.s_ms|default_if_none:''|unlocalize }}" required>
                     </div>
                 </div>
             </div>
@@ -125,7 +178,11 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="mpc">Marge de contrôle de puissance (Mpc)</label>
-                        <input type="number" class="form-control" name="mpc" id="mpc" value="{{ p_c.mpc|unlocalize|default_if_none:'' }}" required>
+                        <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="•	Pour assurer l’efficacité du contrôle de puissance en boucle fermée, la marge du contrôle de puissance est ajoutée dans le bilan de liaison (aussi appelé marge du fading rapide).
+•	Sous la condition de marche, la valeur typique de la marge du contrôle de puissance est de 1.0 à 1.5 dB.
+•	Sous la condition de mouvement en haute vitesse, le contrôle de puissance rapide ne peut pas suivre la vitesse du fading affectant le signal. Dans ce cas, le fading rapide est assuré par Eb/Nt et la marge du contrôle de puissance est 0 dB.
+                        ">?</button>
+                        <input type="number" class="form-control" name="mpc" id="mpc" value="{{ p_c.mpc|default_if_none:1|unlocalize }}" required>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -158,13 +215,13 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="f">Saisir la fréquence (f)</label>
-                        <input type="number" class="form-control" id="f" name="f" value="{{ p_c.f|unlocalize|default_if_none:'' }}" required>
+                        <input type="number" class="form-control" id="f" name="f" value="{{ p_c.f|default_if_none:''|unlocalize }}" required>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="hb">Hauteur du site (hb)</label>
-                        <input type="number" class="form-control" id="hb" value="{{ p_c.hb|unlocalize|default_if_none:'' }}" name="hb">
+                        <input type="number" class="form-control" id="hb" value="{{ p_c.hb|default_if_none:16|unlocalize }}" name="hb">
                     </div>
                 </div>
             </div>
@@ -172,13 +229,13 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="hm">Hauteur valides de l’antenne de la BS (hm)</label>
-                        <input type="number" class="form-control" id="hm" value="{{ p_c.hm|unlocalize|default_if_none:'' }}" name="hm">
+                        <input type="number" class="form-control" id="hm" value="{{ p_c.hm|default_if_none:2|unlocalize }}" name="hm">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="heff">Hauteur valides de l’antenne du MS (Heff)</label>
-                        <input type="number" class="form-control" id="heff" value="{{ p_c.heff|unlocalize|default_if_none:'' }}"  name="heff">
+                        <input type="number" class="form-control" id="heff" value="{{ p_c.heff|default_if_none:1.5|unlocalize }}"  name="heff">
                     </div>
                 </div>
             </div>
