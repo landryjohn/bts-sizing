@@ -33,11 +33,13 @@ def plan_couverture(request):
 
 @login_required
 def add_plan_couverture(request):
+    # recuperatopm de la liste de tous les projets
     projects = list(Projet.objects.all())
     step = request.POST.get('step', None) 
     # print("request.POST =>", end='')
     # print(request.POST)
-    if step == '1' : 
+    if step == '1' :
+        # recuperation de toutes la valeurs poste par l'utilisateur 
         data = request.POST
         if not data.get('id', None) :
             return HttpResponseBadRequest("Oups, Bad request...")
@@ -66,6 +68,7 @@ def add_plan_couverture(request):
         # 3 : Calcul du bilan de liaison
         p_c.pl = min(p_c.pl_ul, p_c.pl_ul) 
 
+        # Sauvegarde en base de donnees 
         p_c.save()
         return render(
             request, 

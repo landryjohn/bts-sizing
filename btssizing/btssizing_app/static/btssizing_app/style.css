@@ -12,6 +12,7 @@
   left: 0;
   height: 100%;
   width: 260px;
+  /* Cette option est utilise pour changer la couleur de la bare gauche de navigation */
   background-color: #1d1b31;
   background-repeat: no-repeat;
   background-size: cover;
