@@ -25,7 +25,7 @@
                         <input type="hidden" name="step" value="1">
                         <label for="project">Choisir le projet</label>
                         <select name="project_id" id="project" class="form-control col-3">
-                            <option {{ p_c.project.id|default_if_none:'selected' }} disabled>Choisir un project</option>
+                            <option {{ p_c.projet|default_if_none:'selected' }} disabled>Choisir un project</option>
                             {% for project in projects %}
                             {% if p_c.projet %}
                             <option  {% if p_c.projet.id == project.id %} selected {% endif %} value="{{project.id}}">{{project.titre}}</option>

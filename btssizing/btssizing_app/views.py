@@ -4,7 +4,7 @@ from django.http import HttpResponseBadRequest
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 
-from .models import Plan_couverture, Projet
+from .models import Plan_capacite, Plan_couverture, Projet
 
 # Vue index
 def index(request): 
@@ -176,6 +176,149 @@ def edit_plan_couverture(request, id):
             'id':id,
             'p_c': p_c
         }
+    )
+
+@login_required
+def plan_capacite(request):
+    plans = Plan_capacite.objects.filter(projet__isnull=False)
+    return render(request, 'btssizing_app/plan_capacite.html', {'plans':plans})
+
+@login_required
+def edit_plan_capacite(request, id):
+    try : 
+        p_ca = Plan_capacite.objects.get(id=id)
+        projects = list(Projet.objects.all())
+    except :
+        return HttpResponseBadRequest("Le plan de capacité choisi n'existe pas.")
+    return render(
+        request, 
+        'btssizing_app/add_plan_capacite.html', 
+        context={
+            'projects':projects, 
+            'id':id,
+            'p_ca': p_ca
+        }
+    )
+
+@login_required
+def add_plan_capacite(request):
+    # recuperatopm de la liste de tous les projets
+    projects = list(Projet.objects.all())
+    # recuperation de toutes la valeurs poste par l'utilisateur 
+    id = request.POST.get('id', None) 
+    if id != None :
+        data = request.POST
+        if not data.get('id', None) :
+            return HttpResponseBadRequest("Oups, Bad request...")
+        data = {k:float(v) for k,v in data.items() if isfloat(v)}
+        p_ca = Plan_capacite.objects.get(id=int(data['id']))
+        p_ca.projet = Projet.objects.get(id=int(data['project_id']))
+        
+        # 1. Calcul de L’intensité de trafic par utilisateur 
+        p_ca.u = data['u']
+        p_ca.h = data['h']
+        p_ca.au = p_ca.u * p_ca.h 
+
+        # 2. Calcul de la population totale /site (2)
+        p_ca.nb_abonnes = data['nb_abonnes']
+        p_ca.nb_sites = data['nb_sites']
+        p_ca.pop_t_site = p_ca.nb_abonnes / p_ca.nb_sites
+
+        # 3. Nombre d’abonnés par service (3)
+        p_ca.p_msg = data['p_msg']
+        p_ca.p_nav = data['p_nav']
+        p_ca.p_rd = data['p_rd']
+        p_ca.p_voix = data['p_voix']
+
+        p_ca.nb_ab_msg = (p_ca.p_msg * p_ca.nb_abonnes) / 100
+        p_ca.nb_ab_nav = (p_ca.p_nav * p_ca.nb_abonnes) / 100
+        p_ca.nb_ab_rd = (p_ca.p_rd * p_ca.nb_abonnes) / 100
+        p_ca.nb_ab_voix = (p_ca.p_voix * p_ca.nb_abonnes) / 100
+
+        # 4.	Débit par abonné pour chaque service 
+        p_ca.d_msg_ul = data['d_msg_ul']
+        p_ca.c_msg = data['c_msg']
+        p_ca.d_nav_ul = data['d_nav_ul']
+        p_ca.c_nav = data['c_nav']
+        p_ca.d_rd_ul = data['d_rd_ul']
+        p_ca.c_rd = data['c_rd']
+        p_ca.d_voix_ul = data['d_voix_ul']
+        p_ca.c_voix = data['c_voix']
+
+        p_ca.d_ab_msg_ul = (p_ca.d_msg_ul * p_ca.c_msg) / 100
+        p_ca.d_ab_nav_ul = (p_ca.d_nav_ul * p_ca.c_nav) / 100
+        p_ca.d_ab_rd_ul = (p_ca.d_rd_ul * p_ca.c_rd) / 100
+        p_ca.d_ab_voix_ul = (p_ca.d_voix_ul * p_ca.c_voix) / 100
+        
+        # Dowlink
+        p_ca.d_msg_dl = data['d_msg_dl']
+        p_ca.d_nav_dl = data['d_nav_dl']
+        p_ca.d_rd_dl = data['d_rd_dl']
+        p_ca.d_voix_dl = data['d_voix_dl']
+
+        p_ca.d_ab_msg_dl = (p_ca.d_msg_dl * p_ca.c_msg) / 100
+        p_ca.d_ab_nav_dl = (p_ca.d_nav_dl * p_ca.c_nav) / 100
+        p_ca.d_ab_rd_dl = (p_ca.d_rd_dl * p_ca.c_rd) / 100
+        p_ca.d_ab_voix_dl = (p_ca.d_voix_dl * p_ca.c_voix) / 100
+        
+        # 5. Débit total de chaque service (4)
+        p_ca.d_total_msg_ul = p_ca.d_ab_msg_ul * p_ca.nb_ab_msg 
+        p_ca.d_total_nav_ul = p_ca.d_ab_nav_ul * p_ca.nb_ab_nav 
+        p_ca.d_total_rd_ul = p_ca.d_ab_rd_ul * p_ca.nb_ab_rd 
+        p_ca.d_total_voix_ul = p_ca.d_ab_voix_ul * p_ca.nb_ab_voix
+
+        p_ca.d_total_msg_dl = p_ca.d_ab_msg_dl * p_ca.nb_ab_msg 
+        p_ca.d_total_nav_dl = p_ca.d_ab_nav_dl * p_ca.nb_ab_nav 
+        p_ca.d_total_rd_dl = p_ca.d_ab_rd_dl * p_ca.nb_ab_rd 
+        p_ca.d_total_voix_dl = p_ca.d_ab_voix_dl * p_ca.nb_ab_voix
+
+        # 6. Débit global utilisateur /classe de service (DL/UL) (5)
+        p_ca.d_total_ul = p_ca.d_total_msg_ul + p_ca.d_total_nav_ul + p_ca.d_total_rd_ul + p_ca.d_total_voix_ul 
+        p_ca.d_total_dl = p_ca.d_total_msg_dl + p_ca.d_total_nav_dl + p_ca.d_total_rd_dl + p_ca.d_total_voix_dl 
+        
+        # 7. Nombre d’abonnés/site
+        p_ca.debit_ul = data['debit_ul']
+        p_ca.nb_ab_ul = p_ca.d_total_ul / (p_ca.debit_ul * 1000)
+        
+        p_ca.debit_dl = data['debit_dl']
+        p_ca.nb_ab_dl = p_ca.d_total_dl / (p_ca.debit_dl * 1000)
+        
+        # 8. Nombre de site (6)
+        p_ca.nb_sites_ul = p_ca.nb_abonnes /  p_ca.nb_ab_ul
+        p_ca.nb_sites_dl = p_ca.nb_abonnes /  p_ca.nb_ab_dl
+        
+        p_ca.nb_sites_capacite = min(p_ca.nb_sites_ul, p_ca.nb_sites_dl)
+
+        p_ca.save()
+        return render(
+            request, 
+            'btssizing_app/result_plan_capacite.html',
+            context={'p_ca':p_ca}
+        )
+    else :
+        # plan_capacite = Plan_capacite.objects.create()
+        plan_capacite = Plan_capacite.objects.get(id=1)
+        return render(
+            request, 
+            'btssizing_app/add_plan_capacite.html', 
+            context={
+                'projects':projects, 
+                # 'id':1,
+                'id':plan_capacite.id,
+                'p_ca': plan_capacite
+            }
+        )
+
+@login_required
+def show_plan_capacite(request, id):
+    try : 
+        p_ca = Plan_capacite.objects.get(id=id)
+    except :
+        return HttpResponseBadRequest("Bad request : Le plan de capacité n'existe pas")
+    return render(
+        request, 
+        'btssizing_app/result_plan_capacite.html',
+        context={'p_ca':p_ca}
     )
 
 @login_required

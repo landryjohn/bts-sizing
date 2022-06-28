@@ -15,4 +15,8 @@ urlpatterns = [
     path('add_plan_couverture/', views.add_plan_couverture, name='add_plan_couverture'),
     path('show_plan_couverture/<int:id>', views.show_plan_couverture, name='show_plan_couverture'),
     path('edit_plan_couverture/<int:id>', views.edit_plan_couverture, name='edit_plan_couverture'),
+    path('plan_capacite/', views.plan_capacite, name='plan_capacite'),
+    path('add_plan_capacite/', views.add_plan_capacite, name='add_plan_capacite'),
+    path('show_plan_capacite/<int:id>', views.show_plan_capacite, name='show_plan_capacite'),
+    path('edit_plan_capacite/<int:id>', views.edit_plan_capacite, name='edit_plan_capacite'),
 ]

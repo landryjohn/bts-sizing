@@ -1,0 +1,24 @@
+{% extends "btssizing_app/app.html" %}
+
+{% block content %}
+<div class="home-content">
+        <i class='bx bx-menu'></i>
+        <span class="text">Résultat de la planification de capacité </span>
+        <hr>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <p>Débit global utilisateur/classe de services UL  : {{ p_ca.d_total_ul }}</p>
+        <p>Débit global utilisateur/classe de services DL  : {{ p_ca.d_total_dl }}</p>
+        <p>Nombre de sites en uplink : {{ p_ca.nb_sites_ul }}</p>
+        <p>Nombre de sites en downlink : {{ p_ca.nb_sites_dl }}</p>
+        <p>Nombre d’abonnés/site UL : {{ p_ca.nb_ab_ul }}</p>
+        <p>Nombre d’abonnés/site DL : {{ p_ca.nb_ab_dl }}</p>
+        <p><h1>Nombre de sites en couverture : <b>{{ p_ca.nb_sites_capacite }}</b></h1></p>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

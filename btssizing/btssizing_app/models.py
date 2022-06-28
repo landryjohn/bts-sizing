@@ -47,3 +47,79 @@ class Plan_couverture(models.Model):
     n_site_dl = models.FloatField(null=True)
     nb_sites = models.IntegerField("Nombre de sites", null=True)
     created_at = models.DateTimeField(auto_now=True)
+
+class Plan_capacite(models.Model):
+    projet = models.ForeignKey(Projet, on_delete=models.CASCADE, null=True)
+    au = models.FloatField(null=True)
+    u = models.FloatField(null=True)
+    h = models.FloatField(null=True)
+    pop_t_site = models.FloatField(null=True)
+    nb_abonnes = models.FloatField(null=True)
+    nb_sites = models.FloatField(null=True)
+
+    nb_ab_msg = models.FloatField(null=True)
+    p_msg = models.FloatField(null=True)
+
+    nb_ab_nav = models.FloatField(null=True)
+    p_nav = models.FloatField(null=True)
+
+    nb_ab_rd = models.FloatField(null=True)
+    p_rd = models.FloatField(null=True)
+
+    nb_ab_voix = models.FloatField(null=True)
+    p_voix = models.FloatField(null=True)
+
+    d_ab_msg_ul = models.FloatField(null=True)
+    d_msg_ul = models.FloatField(null=True)
+    c_msg = models.FloatField(null=True)
+
+    d_ab_nav_ul = models.FloatField(null=True)
+    d_nav_ul = models.FloatField(null=True)
+    c_nav = models.FloatField(null=True)
+
+    d_ab_rd_ul = models.FloatField(null=True)
+    d_rd_ul = models.FloatField(null=True)
+    c_rd = models.FloatField(null=True)
+
+    d_ab_voix_ul = models.FloatField(null=True)
+    d_voix_ul = models.FloatField(null=True)
+    c_voix = models.FloatField(null=True)
+
+    d_ab_msg_dl = models.FloatField(null=True)
+    d_msg_dl = models.FloatField(null=True)
+
+    d_ab_nav_dl = models.FloatField(null=True)
+    d_nav_dl = models.FloatField(null=True)
+
+    d_ab_rd_dl = models.FloatField(null=True)
+    d_rd_dl = models.FloatField(null=True)
+
+    d_ab_voix_dl = models.FloatField(null=True)
+    d_voix_dl = models.FloatField(null=True)
+
+    d_total_msg_ul = models.FloatField(null=True)
+    d_total_nav_ul = models.FloatField(null=True)
+    d_total_rd_ul = models.FloatField(null=True)
+    d_total_voix_ul = models.FloatField(null=True)
+
+    d_total_msg_dl = models.FloatField(null=True)
+    d_total_nav_dl = models.FloatField(null=True)
+    d_total_rd_dl = models.FloatField(null=True)
+    d_total_voix_dl = models.FloatField(null=True)
+
+    d_total_ul = models.FloatField(null=True)
+    d_total_dl = models.FloatField(null=True)
+
+    nb_ab_ul = models.FloatField(null=True)
+    debit_ul = models.FloatField(null=True)
+
+    nb_ab_dl = models.FloatField(null=True)
+    debit_dl = models.FloatField(null=True)
+
+    nb_sites_ul = models.FloatField(null=True)
+    nb_sites_dl = models.FloatField(null=True)
+
+    nb_sites_capacite = models.FloatField(null=True)
+
+    created_at = models.DateTimeField(auto_now=True)
+

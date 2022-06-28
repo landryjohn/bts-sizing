@@ -1,0 +1,203 @@
+{% extends "btssizing_app/app.html" %}
+
+{% load l10n %}
+
+{% block content %}
+<div class="home-content">
+    <i class='bx bx-menu'></i>
+    <span class="text">Ajout d'un plan de capacité</span>
+    <hr>
+</div>
+
+<div class="container mt-3 mb-3">
+    <div class="row">
+        <form action="{% url 'btssizing_app:add_plan_capacite' %}" method="POST">
+            {% csrf_token %}
+            <div class="row mt-2">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <input type="hidden" name="id" value="{{id}}">
+                        <label for="project">Choisir le projet</label>
+                        <select name="project_id" id="project" class="form-control col-3">
+                            <option {{ p_ca.projet|default_if_none:'selected' }} disabled>Choisir un projet</option>
+                            {% for project in projects %}
+                            {% if p_c.projet %}
+                            <option  {% if p_ca.projet.id == project.id %} selected {% endif %} value="{{project.id}}">{{project.titre}}</option>
+                            {% else %}
+                            <option value="{{project.id}}">{{project.titre}}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="u">Taux d'appel</label>
+                        <input type="number" class="form-control" name="u" id="u" value="{{ p_ca.u|default_if_none:''|unlocalize }}" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="h">Durée moyenne d'un appel</label>
+                        <input type="number" class="form-control" name="h" id="h" value="{{ p_ca.h|default_if_none:''|unlocalize }}" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="nb_abonnes">Nombre d'abonnées</label>
+                        <input type="number" class="form-control" name="nb_abonnes" id="nb_abonnes" value="{{ p_ca.nb_abonnes|default_if_none:''|unlocalize }}" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="nb_sites">nombre total de sites pour la couverture</label>
+                        <input type="number" class="form-control" name="nb_sites" id="nb_sites" value="{{ p_ca.nb_sites|default_if_none:''|unlocalize }}" required>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="p_msg">Pourcentage de message</label>
+                        <input type="number" class="form-control" name="p_msg" id="p_msg" value="{{ p_ca.p_msg|default_if_none:''|unlocalize }}" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="p_nav">Pourcentage de navigation</label>
+                        <input type="number" class="form-control" name="p_nav" id="p_nav" value="{{ p_ca.p_nav|default_if_none:''|unlocalize }}" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="p_rd">Pourcentage de réseau de données</label>
+                        <input type="number" class="form-control" name="p_rd" id="p_rd" value="{{ p_ca.p_rd|default_if_none:''|unlocalize }}" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="p_voix">Pourcentage de voix</label>
+                        <input type="number" class="form-control" name="p_voix" id="p_voix" value="{{ p_ca.p_voix|default_if_none:''|unlocalize }}" required>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="d_msg_ul">Débit UL de messagerie</label>
+                        <input type="number" class="form-control" name="d_msg_ul" id="d_msg_ul" value="{{ p_ca.d_msg_ul|default_if_none:''|unlocalize }}" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="c_msg">Taux de contention de messagerie</label>
+                        <input type="number" class="form-control" name="c_msg" id="c_msg" value="{{ p_ca.c_msg|default_if_none:''|unlocalize }}" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="d_nav_ul">Débit UL de navigation</label>
+                        <input type="number" class="form-control" name="d_nav_ul" id="d_nav_ul" value="{{ p_ca.d_nav_ul|default_if_none:''|unlocalize }}" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="c_nav">Taux de contention de navigation</label>
+                        <input type="number" class="form-control" name="c_nav" id="c_nav" value="{{ p_ca.c_nav|default_if_none:''|unlocalize }}" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="d_rd_ul">Débit UL de réseau de données</label>
+                        <input type="number" class="form-control" name="d_rd_ul" id="d_rd_ul" value="{{ p_ca.d_rd_ul|default_if_none:''|unlocalize }}" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="c_rd">Taux de contention de réseau de données</label>
+                        <input type="number" class="form-control" name="c_rd" id="c_rd" value="{{ p_ca.c_rd|default_if_none:''|unlocalize }}" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="d_voix_ul">Débit UL du service voix</label>
+                        <input type="number" class="form-control" name="d_voix_ul" id="d_voix_ul" value="{{ p_ca.d_voix_ul|default_if_none:''|unlocalize }}" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="c_voix">Taux de contention du service voix</label>
+                        <input type="number" class="form-control" name="c_voix" id="c_voix" value="{{ p_ca.c_voix|default_if_none:''|unlocalize }}" required>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="d_msg_dl">Débit DL de messagerie</label>
+                        <input type="number" class="form-control" name="d_msg_dl" id="d_msg_dl" value="{{ p_ca.d_msg_dl|default_if_none:''|unlocalize }}" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="d_nav_dl">Débit DL de navigation</label>
+                        <input type="number" class="form-control" name="d_nav_dl" id="d_nav_dl" value="{{ p_ca.d_nav_dl|default_if_none:''|unlocalize }}" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="d_rd_dl">Débit DL de réseau de donnée</label>
+                        <input type="number" class="form-control" name="d_rd_dl" id="d_rd_dl" value="{{ p_ca.d_rd_dl|default_if_none:''|unlocalize }}" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="d_voix_dl">Débit DL du service voix</label>
+                        <input type="number" class="form-control" name="d_voix_dl" id="d_voix_dl" value="{{ p_ca.d_voix_dl|default_if_none:''|unlocalize }}" required>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="debit_ul">Débit UL</label>
+                        <input type="number" class="form-control" name="debit_ul" id="debit_ul" value="{{ p_ca.debit_ul|default_if_none:''|unlocalize }}" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="debit_dl">Débit DL</label>
+                        <input type="number" class="form-control" name="debit_dl" id="debit_dl" value="{{ p_ca.debit_dl|default_if_none:''|unlocalize }}" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2 mb-3">
+                <div class="col-md-6 text-center">
+                    <input type="submit" class="btn btn-info" value="Valider">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}
